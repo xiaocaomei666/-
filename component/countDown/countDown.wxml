@@ -1,0 +1,4 @@
+<!--component/verificationCode/verificationCode.wxml-->
+<view>
+  <button class="btn" disabled='{{disabled}}' catchtap='fetchBtn'>{{timeBtn}}</button>
+</view>

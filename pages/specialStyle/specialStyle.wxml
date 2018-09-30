@@ -1,0 +1,6 @@
+<!-- 强制换行及缺省的问题 -->
+<text class="title">强制换行及超出显示省略号</text>
+<view class="word-line">1111111111111111111111111111111111111111111</view>
+<view class="word-line">凄凄切切群群群群群群群群群群群群群群群群群群群群群群群群群群群群群群群</view>
+<view class="word-line">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</view>
+<view class="word-line">睡觉觉接电话333333333333ssdddddddddddddddddddddddddddddddddddddd</view>

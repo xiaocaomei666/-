@@ -1,0 +1,13 @@
+/* component/verificationCode/verificationCode.wxss */
+/* 倒计时组件 */
+.btn {
+  display: inline-block;
+  background-color: #008c96;
+  font-size: 26rpx;
+  color: #fff;
+  border-radius: 10rpx;
+  width: 200rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  margin: 10rpx;
+}

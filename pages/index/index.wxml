@@ -1,0 +1,3 @@
+<button class="btn" catchtap='toComponent'>组件</button>
+
+<button class="btn" catchtap='toStyle'>特殊样式</button>

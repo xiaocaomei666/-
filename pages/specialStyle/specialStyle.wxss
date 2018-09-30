@@ -1,0 +1,22 @@
+/* 强制换行 */
+
+.word-line {
+  width: 200rpx;
+  background-color: sandybrown;
+  margin: 10rpx;
+
+  /*  强制英文换行 */
+  /* word-break: break-all; */
+  /* word-wrap: break-word; */
+  
+  /* 强制中文换行 只对中文有作用 */
+  /* white-space: pre-wrap; */
+
+  /* 强制不换行 中英文都有作用 */
+  /* white-space: nowrap; */
+
+  /* 超出不换行，超出部分隐藏且以省略号形式出现（部分浏览器支持）中英文都有作用*/
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

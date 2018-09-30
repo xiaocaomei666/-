@@ -1,0 +1,11 @@
+{
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "组件的使用",
+  "backgroundColor": "#fff",
+  "backgroundColorTop": "#008c96",
+  "backgroundColorBottom": "#fff",
+  "usingComponents": {
+    "wmx-count-down": "../../component/countDown/countDown"
+  }
+}
