@@ -3,8 +3,3 @@ page{
   height: 100%;
   padding: 20rpx;
 }
-.btn{
-  margin: 20rpx;
-  background-color: #008C96;
-  color: #fff;
-}

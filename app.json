@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/componentUse/componentUse",
-    "pages/specialStyle/specialStyle"
+    "pages/specialStyle/specialStyle",
+    "pages/wxUtils/wxUtils"
   ],
   "window": {
     "backgroundTextStyle": "light",

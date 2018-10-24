@@ -1,6 +1,19 @@
-// pages/index/index.js
+// pages/wxUtils/wxUtils.js
 import {
+  $SUCCESS,
+  $ERROR,
+  $WARNING,
+  $TOKENFAIL,
+
   $log,
+  $warn,
+
+  $toast,
+
+  $showLoading,
+  $hideLoading,
+
+  $modal,
   $sheet
 } from '../../utils/wxUtil.js'
 
@@ -19,38 +32,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    $log('监听页面加载')
+
   },
 
-  // 跳转到微信封装的各种工具中
-  toWx(){
-    wx.navigateTo({
-      url: '../wxUtils/wxUtils',
-    })
+  // 打印
+  log() {
+    $log('自定义打印样式1')
   },
 
-  // 跳转到组件的使用
-  toComponent() {
-    $sheet(['组件', '特殊样式'], '#008C96').then(res => {
-      if (res.tapIndex == 0) {
-        wx.navigateTo({
-          url: '../componentUse/componentUse',
-        })
-      } else {
-        wx.navigateTo({
-          url: '../specialStyle/specialStyle',
-        })
-      }
-    }).catch(res => {
-      console.log(res)
-    })
+  warn() {
+    $warn('自定义打印样式2')
   },
 
-  // 跳转到特殊样式
-  toStyle() {
-    wx.navigateTo({
-      url: '../specialStyle/specialStyle',
-    })
+  // 显示消息提示框
+  toast(){
+    // $toast('成功', 'success')
+    // $toast('加载中', 'loading')
+    $toast('网络异常')
+  },
+
+  //loading 提示框
+  loading(){
+    $showLoading()
+  },
+
+  hideLoading(){
+    $hideLoading()
   },
 
   /**

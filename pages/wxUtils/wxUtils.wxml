@@ -1,0 +1,8 @@
+<!--pages/wxUtils/wxUtils.wxml-->
+
+<button plain class="btn">接口返回code状态码</button>
+<button class="btn" catchtap='log'>自定义打印样式1</button>
+<button class="btn" catchtap='warn'>自定义打印样式2</button>
+<button type="warn"  class="btn" catchtap='toast'>显示消息提示框</button>
+<button plain class="btn" catchtap='loading'>显示 loading 提示框</button>
+<button plain class="btn" catchtap='hideLoading'>隐藏 loading 提示框</button>
