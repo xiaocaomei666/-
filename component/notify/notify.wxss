@@ -1,0 +1,14 @@
+/* components/notify/notify.wxss */
+
+/* 假日弹窗 */
+.notify-content {
+  text-align: left;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+.notify-content .nickname{
+  margin-bottom: 10rpx;
+}
+.notify-content .content{
+  text-indent: 2em;
+}

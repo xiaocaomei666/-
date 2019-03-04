@@ -1,0 +1,12 @@
+/* pages/exAddress/exAddress.wxss */
+.picker-address{
+  width: 250rpx;
+  height: 80rpx;
+  border-bottom: 1rpx solid salmon;
+  line-height: 80rpx;
+  margin: 0 auto 20rpx;
+}
+
+.pickerstyle{
+  color: #ccc;
+}

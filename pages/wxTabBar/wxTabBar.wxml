@@ -1,0 +1,12 @@
+<!--pages/wxTabBar/wxTabBar.wxml-->
+<button class="btn" catchtap='toIndex' plain>显示 tabBar 第二项的右上角的红点</button>
+<button class="btn" catchtap='toIndex' plain>隐藏 tabBar 第二项的右上角的红点</button>
+
+<button plain class="btn" catchtap='toIndex'>显示 tabBar </button>
+<button plain class="btn" catchtap='toIndex'>隐藏 tabBar </button>
+
+<button plain class="btn" catchtap='toIndex'>动态设置 tabBar 的整体样式 </button>
+<button plain class="btn" catchtap='toIndex'>动态设置 tabBar 第二项的内容 </button>
+
+<button plain class="btn" catchtap='toIndex'>为 tabBar 第二项的右上角添加文本</button>
+<button plain class="btn" catchtap='toIndex'>移除 tabBar 某一项右上角的文本</button>

@@ -1,0 +1,12 @@
+<!--components/notify/notify.wxml-->
+<xts-dialog visible="{{ visible }}"
+            title="春节放假通知"
+            content="" 
+            showCancel="{{false}}"
+            submitText="知道了" 
+            bind:submit="handleTapClose">
+    <view class="notify-content">
+      <view class="nickname">尊敬的客户：</view>
+      <view class="content">您好！鼎湖山泉小桶水放假时间为：2月2日（年二十八）至2月10日（年初六），共计9天。2月11日（年初7）开始恢复送水。</view>
+    </view>
+</xts-dialog>

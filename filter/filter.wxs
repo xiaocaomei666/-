@@ -1,0 +1,23 @@
+// 格式过滤
+// 价格小数点  eg: 9 => 9.00
+var numToFixed =  function (num, digits = 2) {
+  if (typeof num !== 'number') {
+    num = Number(num)
+  }
+  return num.toFixed(digits)
+}
+
+// 格式时间 eg： 2019-12-14 23:59:59 => 2019.12.14
+var sliceDateToDot = function(item) {
+  if (item) {
+    var reg =  getRegExp('-', 'g')
+    return item.slice(0, 10).replace(reg, '.')
+  } else {
+    return ''
+  }
+}
+
+module.exports = {
+  numToFixed: numToFixed,
+  sliceDateToDot: sliceDateToDot
+}

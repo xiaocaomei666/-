@@ -8,13 +8,7 @@ import {
   $log,
   $warn,
 
-  $toast,
-
-  $showLoading,
-  $hideLoading,
-
-  $modal,
-  $sheet
+  $routerPage
 } from '../../utils/wxUtil.js'
 
 const app = getApp()
@@ -44,21 +38,36 @@ Page({
     $warn('自定义打印样式2')
   },
 
-  // 显示消息提示框
-  toast(){
-    // $toast('成功', 'success')
-    // $toast('加载中', 'loading')
-    $toast('网络异常')
+  // 提示功能 -- 界面交互
+  toTip() {
+    $routerPage('../wxTips/wxTips')
   },
 
-  //loading 提示框
-  loading(){
-    $showLoading()
+  // 导航栏
+  toNavigationBar() {
+    $routerPage('../wxNavBar/wxNavBar')
   },
 
-  hideLoading(){
-    $hideLoading()
+  // 背景
+  toSetBg() {
+    $routerPage('../wxSetBg/wxSetBg')
   },
+
+  // Tab Bar
+  toTabBar() {
+    $routerPage('../wxTabBar/wxTabBar')
+  },
+
+  // 路由
+  toRouter() {
+    $routerPage('../wxRouter/wxRouter')
+  },
+
+  // 系统信息
+  toSysInfo(){
+    $routerPage('../wxSysInfo/wxSysInfo')
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

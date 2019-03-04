@@ -1,0 +1,55 @@
+<!--components/dialog/dialog.wxml-->
+<view class="dhsq-dialog {{ visible ? 'active' : '' }}">
+
+    <view class="dialog-body {{ anim ? 'anim bounceIn' :'' }}">
+      <image wx:if="{{ closeable }}" bindtap="handleTapClose" class="icon-close" src="./images/notice_icon_close.png" />
+      <view class="dialog-content">
+        <view class="main">
+          <view class="title" wx:if="{{ showTitle }}">{{ title }}</view>
+  
+          <view class="slot-content" wx:if="{{ !content }}">
+            <!-- slot 内容区 -->
+            <slot></slot>
+          </view>
+  
+          <!--  -->
+          <view class="content" wx:else>
+            <view class="text" style="text-align: {{ textAlign }};">{{ content }}</view>
+          </view>
+  
+        </view>
+        <view class="footer {{ !showCancel ? 'flex-center' : '' }}">
+          <!-- 取消 -->
+          <button class="btn cancel"
+                  wx:if="{{ showCancel }}" 
+                  hover-class='cl35'
+                  data-button-type="cancel"
+                  open-type="{{ cancelButtonType }}"
+                  bindtap="handleTapCancel"
+                  bindgetphonenumber="getPhoneNumber"
+                  lang="zh_CN"
+                  bindgetuserinfo="getUserInfo"
+                  bindopensetting="opensettingCallBack"
+                  bindcontact="contactCallBack">
+                  {{ cancelText }}
+          </button>
+          <!-- 确认 -->
+          <button class="btn submit {{ store ? 'store' : '' }}"
+                  hover-class='cl35'
+                  data-button-type="submit"
+                  open-type="{{ submitButtonType }}"
+                  data-button-type="dialogComponent"
+                  bindtap="handleTapSubmit"
+                  bindgetphonenumber="getPhoneNumber"
+                  lang="zh_CN"
+                  bindgetuserinfo="getUserInfo"
+                  bindopensetting="opensettingCallBack"
+                  bindcontact="contactCallBack">
+                  {{ submitText }}
+         </button>
+        </view>
+      </view>
+    </view>
+
+</view>
+

@@ -1,0 +1,20 @@
+<!--component/lzq-video/lzq-video.wxml-->
+<view class="lzq-video">
+  <video id="{{ 'lzq-video-' + videoId }}" 
+          class="lzq-video-item" 
+          bindplay="videoPlay"
+          bindpause="videoPause"
+          bindended="videoEnded" 
+          src="{{ videoSrc }}">
+
+    <cover-view class="controls" bindtap="handleTapVideoPlay" hidden="{{ !isShowVideoPoster }}">
+      <cover-view class="poster">
+        <cover-image class="poster-image" src="{{ posterSrc }}" />
+      </cover-view>
+      <cover-view class="play">
+        <cover-image class="play-btn" src="../../images/icon-player.png" />
+      </cover-view>
+    </cover-view>
+
+  </video>
+</view>

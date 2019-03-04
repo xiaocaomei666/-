@@ -1,6 +1,7 @@
 /**app.wxss**/
 
 page {
+  width: 100%;
   height: 100%;
   background-color: #fff;
   color: #353535;
@@ -78,6 +79,10 @@ page {
   margin-top: 20rpx;
 }
 
+.mr20 {
+  margin-right: 20rpx;
+}
+
 .mb20 {
   margin-bottom: 20rpx;
 }
@@ -86,38 +91,22 @@ page {
   margin-left: 20rpx;
 }
 
-.mr20 {
-  margin-right: 20rpx;
-}
-
-.mr40 {
-  margin-right: 40rpx;
-}
-
 /* 内边距 */
 
 .pt20 {
   padding-top: 20rpx;
 }
 
-.pt25 {
-  padding-top: 25rpx;
+.pr20 {
+  padding-right: 20rpx;
 }
 
 .pb20 {
   padding-bottom: 20rpx;
 }
 
-.pb25 {
-  padding-bottom: 25rpx;
-}
-
-.pl10 {
+.pl20 {
   padding-left: 20rpx;
-}
-
-.pr10 {
-  padding-right: 20rpx;
 }
 
 /* 边框 */
@@ -150,18 +139,18 @@ button::after {
   border: none;
 }
 
-button{
+button {
   margin: 0;
   padding: 0;
 }
 
-.btn{
+.btn {
   margin: 20rpx;
-  background-color: #008C96;
+  background-color: #008c96;
   color: #fff;
 }
 
-/*短斜杠  */
+/*短横杠  */
 
 .div-line {
   display: inline-block;
@@ -176,7 +165,7 @@ button{
 .placeholder-image {
   width: 100%;
   height: 100%;
-  background-image: url('http://p7ezyptwz.bkt.clouddn.com/1531365726039placeholder.jpg');
+  background-image: url('./images/1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -220,10 +209,63 @@ button{
 }
 
 /* 标题 */
-.title{
+
+.title {
   font-weight: 600;
-  color: #008C96;
+  color: #008c96;
   font-size: 30rpx;
   margin: 10rpx;
   display: block;
+  line-height: 45rpx;
+}
+
+/* 弹窗 */
+
+.dialog {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* 弹窗动效 */
+
+/* 动效 */
+
+.anim {
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+}
+
+.anim.bounceIn {
+  animation-duration: 0.5s;
+}
+
+.bounceIn {
+  animation-name: bounceIn;
+}
+
+@keyframes bounceIn {
+  from, 50%, to {
+    animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+  }
+
+  0% {
+    opacity: 0;
+    -webkit-transform: translate(-50%, -50%) scale3d(0, 0, 0);
+    transform: translate(-50%, -50%) scale3d(0, 0, 0);
+  }
+
+  50% {
+    -webkit-transform: translate(-50%, -50%) scale3d(1.1, 1.1, 1.1);
+    transform: translate(-50%, -50%) scale3d(1.1, 1.1, 1.1);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translate(-50%, -50%) scale3d(1, 1, 1);
+    transform: translate(-50%, -50%) scale3d(1, 1, 1);
+  }
 }

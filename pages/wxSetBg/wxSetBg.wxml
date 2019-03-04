@@ -1,0 +1,4 @@
+<!--pages/wxSetBg/wxSetBg.wxml-->
+<button plain class="btn" catchtap='setBgTextStyle'>动态设置下拉背景字体、loading 图的样式</button>
+
+<button plain class="btn" catchtap='setBgColor'>动态设置窗口的背景色</button>

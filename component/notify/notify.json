@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "xts-dialog": "/components/dialog/dialog"
+  }
+}

@@ -1,0 +1,7 @@
+<!--pages/wxTips/wxTips.wxml-->
+<button type="warn"  class="btn" catchtap='toast'>显示消息提示框</button>
+<button plain type="btn"  class="btn" catchtap='modal'>显示模态对话框</button>
+<button plain class="btn" catchtap='loading'>显示 loading 提示框</button>
+<button plain class="btn" catchtap='showActionSheet'>显示操作菜单</button>
+<button plain class="btn" catchtap='hideToast'>隐藏消息提示框</button>
+<button plain class="btn" catchtap='hideLoading'>隐藏 loading 提示框</button>

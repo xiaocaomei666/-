@@ -1,42 +1,52 @@
-// import { 
-//   $checkAuthSetting, 
-//   $toast, 
-//   $routerPage, 
-//   $checkSession, 
-//   $wxLogin,
-//   $getUserInfo,
-//   $getCurrentPageUrl,
-//   $getCurrentPageUrlWithArgsPromise,
-//   $getSystemInfo
-// } from './utils/wxUtil.js'
-// const http = require('./request.js')
-// const config = require('./config/index.js')
-// console.log('----APP 白名单页面：-----',  config.authWhitePages)
+//app.js
+// 埋点统计js引用 -s
+import WxTrack from './libs/wxTrack/index.js'
+// 埋点统计js引用 -e 
 
-// // 检测页面当前页面是否在白名单
-// const checkAuthWhitePage = (currentPage, Pages) => {
-//   return Pages.indexOf(currentPage) !== -1
-// }
+import {
+  $checkAuthSetting,
+  $toast,
+  $routerPage,
+  $checkSession,
+  $wxLogin,
+  $getUserInfo,
+  $getCurrentPageUrl,
+  $getCurrentPageUrlWithArgsPromise,
+  $getSystemInfo
+} from './utils/wxUtil.js'
+
+import {
+  filterUrlParam
+} from './utils/util.js'
+import WxEvent from './libs/wx-event.js'
+const http = require('./request.js')
+const config = require('./config/index.js')
+console.log('----APP 白名单页面：-----', config.authWhitePages)
+
+// 检测页面当前页面是否在白名单
+const checkAuthWhitePage = (currentPage, Pages) => {
+  return Pages.indexOf(currentPage) !== -1
+}
 
 App({
-  onLaunch: function () {
-    // 展示本地存储能力
-    // var logs = wx.getStorageSync('logs') || []
-    // logs.unshift(Date.now())
-    // wx.setStorageSync('logs', logs)
-    // 注释
-    // this.globalGetSystemInfo()
+  // 事件订阅发布
+  wxEvent: new WxEvent(),
+
+  onLaunch: function() {
+    // 全局检测设备
+    this.globalGetSystemInfo()
+
     // 获取小程序更新机制兼容
     if (wx.canIUse('getUpdateManager')) {
       const updateManager = wx.getUpdateManager()
-      updateManager.onCheckForUpdate(function (res) {
+      updateManager.onCheckForUpdate(function(res) {
         // 请求完新版本信息的回调
         if (res.hasUpdate) {
-          updateManager.onUpdateReady(function () {
+          updateManager.onUpdateReady(function() {
             wx.showModal({
               title: '更新提示',
               content: '新版本已经准备好，是否重启应用？',
-              success: function (res) {
+              success: function(res) {
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate()
@@ -44,7 +54,7 @@ App({
               }
             })
           })
-          updateManager.onUpdateFailed(function () {
+          updateManager.onUpdateFailed(function() {
             // 新的版本下载失败
             wx.showModal({
               title: '已经有新版本了哟~',
@@ -61,99 +71,175 @@ App({
       })
     }
   },
-  onShow: function (e) {
+
+  onShow: function(opts) {
+    // 调用全局场景值函数
+    this.globalGetAppOnShowOpts(opts)
     // 调用全局检测授权情况
-    // this.globalAuthSetting()
+    this.globalAuthSetting()
   },
+
+  onHide: function() {
+    console.log('App onHide')
+    // 销毁事件
+    this.wxEvent.off()
+  },
+
   // 全局检测授权情况
-  // globalAuthSetting () {
-  //   $checkAuthSetting().then(res => {
-  //     if (res.authSetting['scope.userInfo']) {
-  //       // 已经授权操作
-  //       console.log('----APP 全局检测：已授权----')
+  globalAuthSetting() {
+    $checkAuthSetting().then(res => {
+      if (res.authSetting['scope.userInfo']) {
+        // 已经授权操作
+        console.log('----APP 全局检测：已授权----')
 
-  //       // todo 获取用户信息并保存
-  //       $getUserInfo().then(res => {
-  //         let userInfo = res
-  //         this.globalData.userInfo = userInfo
-  //         // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-  //         // 所以此处加入 callback 以防止这种情况
-  //         if (this.userInfoReadyCallback) {
-  //           this.userInfoReadyCallback(userInfo)
-  //         }
-  //         this.func.putCache('userInfo', userInfo)
-  //         return userInfo
-  //       }).then(userInfo => {
-  //         let loginParams = userInfo
-  //         // 检测 session_key状态
-  //         $checkSession().then(sessionRes => {
-  //           console.log('----APP session_key 未过期 ----',  sessionRes)
-  //         }).catch(sessionErr => {
-  //           console.log('----APP session_key 已过期 ----',  sessionErr)
-  //           // 过期重新调用微信wx.login登录
-  //           $wxLogin().then(wxRes => {
-  //             console.log('----APP 重新登录-> wxlogin:----',  wxRes)
-  //             let code = wxRes.code
-  //             wx.setStorageSync("code", code)
-  //             loginParams.code = code
-  //             this.func.req('login', loginParams, '', reqRes => {
-  //               let {code, token} = reqRes
-  //               if (code == 0) {
-  //                 wx.setStorageSync("token", token)
-  //               } else {
-  //                 $toast('网络错误！')
-  //               }
-  //             })
-  //           })
-  //         })
-  //       })
+        // todo 获取用户信息并保存
+        $getUserInfo().then(res => {
+          let userInfo = res
+          this.globalData.userInfo = userInfo
+          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+          // 所以此处加入 callback 以防止这种情况
+          if (this.userInfoReadyCallback) {
+            this.userInfoReadyCallback(userInfo)
+          }
+          return userInfo
+        }).then(userInfo => {
+          let loginParams = userInfo
+          // 检测 session_key状态
+          $checkSession().then(sessionRes => {
+            console.log('----APP session_key 未过期 ----', sessionRes)
+          }).catch(sessionErr => {
+            console.log('----APP session_key 已过期 ----', sessionErr)
+            // 过期重新调用微信wx.login登录
+            $wxLogin().then(wxRes => {
+              console.log('----APP 重新登录-> wxlogin:----', wxRes)
+              let code = wxRes.code
+              wx.setStorageSync("code", code)
+              loginParams.code = code
+              this.func.$post('login', loginParams, reqRes => {
+                let {
+                  code,
+                  token
+                } = reqRes
+                if (code == 0) {
+                  wx.setStorageSync("token", token)
+                } else {
+                  $toast('网络错误！')
+                }
+              })
+            })
+          })
+        })
 
-  //     } else {
-  //       // 未授权跳转授权页面
-  //       console.log('----APP 未授权 ----')
-
-  //       $getCurrentPageUrlWithArgsPromise().then(res => {
-  //         console.log('----APP 当前打开页面URL：----',  res)
-  //         let currentUrl = $getCurrentPageUrl()
-  //         let isInPageAuthWhite =  checkAuthWhitePage(currentUrl, config.authWhitePages)
-  //         return isInPageAuthWhite ? isInPageAuthWhite : res
-  //       }).then(res => {
-  //         if (res !== true) {
-  //           console.log('----APP 非白名单页面跳转授权页面 ----')
-  //           let loginCallBackUrl = res
-  //           $routerPage('/pages/login/login', 'redirectTo').then(() => {
-  //             wx.setStorageSync('loginCallBackUrl', loginCallBackUrl)
-  //           })
-  //         } else {
-  //           console.log('----APP 白名单页面不跳转授权页面 ----')
-  //         }
-  //       })
-  //     }
-  //   }).catch(err => {
-  //     console.log('----APP $checkAuthSetting error ----',  err)
-  //     $toast('微信授权接口请求失败！')
-  //   })
-  // },
+      } else {
+        // 未授权跳转授权页面
+        console.log('----APP 未授权 ----')
+        $getCurrentPageUrlWithArgsPromise().then(res => {
+          console.log('----APP 当前打开页面URL：----', res)
+          let currentUrl = $getCurrentPageUrl()
+          let isInPageAuthWhite = checkAuthWhitePage(currentUrl, config.authWhitePages)
+          return isInPageAuthWhite ? isInPageAuthWhite : res
+        }).then(res => {
+          if (res !== true) {
+            console.log('----APP 非白名单页面跳转授权页面 ----')
+            let loginCallBackUrl = res
+            $routerPage('/pages/login/login', 'redirectTo').then(() => {
+              let isHasLoginCallBackUrl = wx.getStorageSync('loginCallBackUrl') || ''
+              if (!isHasLoginCallBackUrl) {
+                wx.setStorageSync('loginCallBackUrl', loginCallBackUrl)
+              }
+            })
+          } else {
+            console.log('----APP 白名单页面不跳转授权页面 ----')
+          }
+        })
+      }
+    }).catch(err => {
+      console.log('----APP $checkAuthSetting error ----', err)
+      $toast('微信授权接口请求失败！')
+    })
+  },
 
   // 全局检测设备
-  // globalGetSystemInfo () {
-  //   $getSystemInfo().then(res => {
-  //     console.log('----APP sysInfo：----',  res)
-  //     this.globalData.isIpx = res.search('iPhone X') != -1
-  //   })
-  // },
+  globalGetSystemInfo() {
+    // 获取本地记录设备参数
+    $getSystemInfo().then(res => {
+      console.log('sysInfo', res)
+      // 是否是苹果手机
+      let isIphone = res.model.indexOf('iPhone') !== -1
+      this.globalData.isIphone = isIphone
+
+      let {
+        screenHeight,
+        pixelRatio
+      } = res
+      // 是否是 iPhoneX 手机
+      if (isIphone && screenHeight >= 812) {
+        this.globalData.isIpx = true
+      } else {
+        this.globalData.isIpx = false
+      }
+
+      // 是否是全面屏的手机
+      if (this.globalData.isIpx || (screenHeight > 736 && pixelRatio >= 2.6)) {
+        this.globalData.isFullDisplay = true
+      } else {
+        this.globalData.isFullDisplay = false
+      }
+
+      console.log('----isIphone ：----', this.globalData.isIphone)
+      console.log('----System Iphone X +：----', this.globalData.isIpx)
+      console.log('----isFullDisplay ：----', this.globalData.isFullDisplay)
+
+      if (this.systemInfoCallback) {
+        this.systemInfoCallback({
+          isIphone: this.globalData.isIphone,
+          isIpx: this.globalData.isIpx,
+          isFullDisplay: this.globalData.isFullDisplay
+        })
+      }
+    })
+  },
+
+  // 全局场景值
+  globalGetAppOnShowOpts(opts) {
+    console.log('App进入场景值：', opts)
+    this.globalData.appScene = opts
+    let sceneCode = opts.scene
+    let {
+      scene
+    } = opts.query
+    if (scene) {
+      let decodeScene = filterUrlParam(decodeURIComponent(scene))
+      let {
+        t1
+      } = decodeScene
+      // 限制扫描进入-> 防止切换后台回来二次操作
+      if (t1 && (sceneCode == 1047 || sceneCode == 1048 || sceneCode == 1049)) {
+        wx.removeStorageSync('code')
+        wx.removeStorageSync('token')
+        this.globalData.serviceStationCode = t1
+        $routerPage('/pages/login/login', 'redirectTo')
+      }
+    }
+  },
 
   globalData: {
     userInfo: null,
-    isIpx: null
+    isIpx: null,
+    isFullDisplay: null,
+    isIphone: null,
+    // 场景值
+    appScene: null,
+    // 社区服务站code
+    serviceStationCode: null,
+    // 实体卡订单数据
+    entityCardOrderInfo: null,
+    // 新年大礼包订单数据
+    newYearOrderInfo: null,
   },
-  // func: {
-  //   req: http.req,
-  //   getreq: http.getreq,
-  //   nologin: http.nologin,
-  //   getCache: http.getCache,
-  //   delCache: http.delCache,
-  //   putCache: http.putCache,
-  //   getFormId: http.getFormId
-  // }
+  func: {
+    $post: http.$post,
+    $get: http.$get,
+    getFormId: http.getFormId
+  }
 })

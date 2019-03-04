@@ -1,0 +1,4 @@
+<!--pages/wxSysInfo/wxSysInfo.wxml-->
+
+<button plain class="btn" catchtap='getSystemInfo'>获取系统信息</button>
+<button plain class="btn" catchtap='getSystemInfoSync'>同步获取系统信息</button>

@@ -8,8 +8,8 @@
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.91",
-	"appid": "wxaf3ccf0f0c9d421c",
+	"libVersion": "2.3.2",
+	"appid": "wx4c7c3d63ff1ca48a",
 	"projectname": "wmx",
 	"isGameTourist": false,
 	"condition": {
@@ -30,12 +30,75 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 9,
 			"list": [
 				{
 					"id": -1,
 					"name": "工具的使用",
-					"pathName": "pages/wxUtils/wxUtils"
+					"pathName": "pages/wxUtils/wxUtils",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "API -- 界面交互",
+					"pathName": "pages/wxTips/wxTips",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "API -- 导航栏",
+					"pathName": "pages/wxNavBar/wxNavBar",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "API -- 背景",
+					"pathName": "pages/wxSetBg/wxSetBg",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "API -- Tab Bar",
+					"pathName": "pages/wxTabBar/wxTabBar",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "API -- 路由",
+					"pathName": "pages/wxRouter/wxRouter",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "API -- 系统信息",
+					"pathName": "pages/wxSysInfo/wxSysInfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "常用实例",
+					"pathName": "pages/example/example",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实例 -- 全局检测",
+					"pathName": "pages/exGlobalGet/exGlobalGet",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实例 -- 地址组件",
+					"pathName": "pages/exAddress/exAddress",
+					"scene": null
 				}
 			]
 		}

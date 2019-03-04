@@ -1,0 +1,9 @@
+<!--pages/exAddress/exAddress.wxml-->
+<text class='title'>1. 三级联动</text>
+
+<picker mode="multiSelector" bindchange="addrPicker" bindcolumnchange="addrPickerCol" value="{{ multiIndex }}" range="{{ multiArray }}" bindcancel="addrCancel">
+  <view class='picker-address'>
+    <text wx:if="{{ fullAddr }}">{{ fullAddr }}</text>
+    <text class="pickerstyle" wx:else>请选择</text>
+  </view>
+</picker>

@@ -1,0 +1,7 @@
+<!--pages/exGlobalGet/exGlobalGet.wxml-->
+<text class='title'>注意：定义全局属性和方法一般写在app.js中，需要时可在当前页面调用全局的属性和方法。为了防止数据不同步的问题，需要在页面中调用回调方法。</text>
+<button plain class="btn" catchtap='globalGetSystemInfo'>全局检测用户设备</button>
+<text>{{ globalSystemInfo }}</text>
+
+<button plain class="btn" catchtap='dataBack'>数据回传到上一页</button>
+

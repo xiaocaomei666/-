@@ -1,0 +1,7 @@
+<!--pages/example/example.wxml-->
+<button plain class="btn" catchtap='globalGet'>数据获取和操作</button>
+<text>{{ dataBack }}</text>
+
+<button plain class="btn" catchtap='debounce'>函数防抖</button>
+
+<button plain class="btn" catchtap='address'>自定义地址组件</button>

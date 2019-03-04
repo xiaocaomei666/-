@@ -3,7 +3,16 @@
     "pages/index/index",
     "pages/componentUse/componentUse",
     "pages/specialStyle/specialStyle",
-    "pages/wxUtils/wxUtils"
+    "pages/example/example",
+    "pages/wxUtils/wxUtils",
+    "pages/wxTips/wxTips",
+    "pages/wxNavBar/wxNavBar",
+    "pages/wxSetBg/wxSetBg",
+    "pages/wxTabBar/wxTabBar",
+    "pages/wxRouter/wxRouter",
+    "pages/wxSysInfo/wxSysInfo",
+    "pages/exGlobalGet/exGlobalGet",
+    "pages/exAddress/exAddress"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -11,5 +20,36 @@
     "navigationBarTitleText": "小程序",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f4f4f4"
+  },
+  "tabBar": {
+    "color": "#ccc",
+    "selectedColor": "#008C96",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/tabbar/icon_home.png",
+        "selectedIconPath": "images/tabbar/icon_home_active.png",
+        "text": "API"
+      },
+      {
+        "pagePath": "pages/componentUse/componentUse",
+        "iconPath": "images/tabbar/icon_discover.png",
+        "selectedIconPath": "images/tabbar/icon_discover_active.png",
+        "text": "组件"
+      },
+      {
+        "pagePath": "pages/specialStyle/specialStyle",
+        "iconPath": "images/tabbar/icon_mine.png",
+        "selectedIconPath": "images/tabbar/icon_mine_active.png",
+        "text": "特殊样式"
+      },
+      {
+        "pagePath": "pages/example/example",
+        "iconPath": "images/tabbar/icon_mine.png",
+        "selectedIconPath": "images/tabbar/icon_mine_active.png",
+        "text": "常用实例"
+      }
+    ]
   }
 }

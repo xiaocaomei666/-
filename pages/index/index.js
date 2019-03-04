@@ -1,7 +1,16 @@
 // pages/index/index.js
 import {
   $log,
-  $sheet
+  $sheet,
+
+  $showTbRedDot,
+  $hideTbRedDot,
+  $showTabBar,
+  $hideTabBar,
+  $setTabBarStyle,
+  $setTbItem,
+  $setTbBadge,
+  $removeTbBadge
 } from '../../utils/wxUtil.js'
 
 const app = getApp()
@@ -29,28 +38,44 @@ Page({
     })
   },
 
-  // 跳转到组件的使用
-  toComponent() {
-    $sheet(['组件', '特殊样式'], '#008C96').then(res => {
-      if (res.tapIndex == 0) {
-        wx.navigateTo({
-          url: '../componentUse/componentUse',
-        })
-      } else {
-        wx.navigateTo({
-          url: '../specialStyle/specialStyle',
-        })
-      }
-    }).catch(res => {
-      console.log(res)
-    })
+  // 显示 tabBar 某一项的右上角的红点
+  showTbRedDot() {
+    $showTbRedDot(1)
   },
 
-  // 跳转到特殊样式
-  toStyle() {
-    wx.navigateTo({
-      url: '../specialStyle/specialStyle',
-    })
+  // 隐藏 tabBar 某一项的右上角的红点
+  hideTbRedDot(){
+    $hideTbRedDot(1)
+  },
+
+  // 显示 tabBar
+  showTabBar(){
+    $showTabBar()
+  },
+
+  // 隐藏 tabBar
+  hideTabBar() {
+    $hideTabBar()
+  },
+
+  // 动态设置 tabBar 的整体样式
+  setTabBarStyle(){
+    $setTabBarStyle()
+  },
+
+  // 动态设置 tabBar 某一项的内容
+  setTbItem(){
+    $setTbItem(1)
+  },
+
+  // 为 tabBar 第二项的右上角添加文本
+  setTbBadge(){
+    $setTbBadge(1,'为 tabBar 第二项的右上角添加文本')
+  },
+
+  // 移除 tabBar 第二项右上角的文本
+  removeTbBadge(){
+    $removeTbBadge(1, '移除 tabBar 第二项的右上角的文本')
   },
 
   /**
