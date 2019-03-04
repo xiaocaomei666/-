@@ -19,8 +19,8 @@ const envMap = {
 // 小程序appid
 const xcxAppId = {
   dev: 'wx4c7c3d63ff1ca48a', // 开发环境
-  test: 'wxaf3ccf0f0c9d421c', // 测试环境
-  prod: 'wxaf3ccf0f0c9d421c' // 生产环境
+  test: '', // 测试环境
+  prod: '' // 生产环境
 }
 
 
