@@ -1,0 +1,13 @@
+<!--pages/exSaveImgAuto/exSaveImgAuto.wxml-->
+
+<!-- 获取用户相册授权弹窗 /s -->
+<wmx-dialog visible="{{ photoDialogVisible }}" content="为了能保存图片，请您允许授权保存图片或视频到您的相册" submitButtonType="openSetting" bind:cancel="closeDialog" bind:openSetting="submitPhotoDialog">
+</wmx-dialog>
+<!-- 获取用户相册授权弹窗 /e -->
+
+
+<view wx:if="{{ posterUrl }}">
+  <image src='{{ posterUrl }}' class='bg-img' mode='widthFix'></image>
+</view>
+<!-- 生成专属海报 -->
+<painter wx:else customStyle='width: 750rpx;height:1210rpx;' palette="{{posterTemplate}}" bind:imgOK="posterImgOk" />

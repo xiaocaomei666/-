@@ -1,0 +1,12 @@
+/* pages/exSaveImgAuto/exSaveImgAuto.wxss */
+page {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(-78deg, rgba(26, 187, 141, 1) 0%, rgba(98, 223, 163, 1) 90%);
+}
+
+.bg-img {
+  width: 100%;
+  height: 100%;
+}

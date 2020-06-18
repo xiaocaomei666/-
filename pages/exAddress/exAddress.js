@@ -1,34 +1,10 @@
 // pages/exAddress/exAddress.js
+import {
+  $getSystemInfoSync
+} from '../../utils/wxUtil.js'
+
+import { formatAreaList } from '../../utils/addrUtil.js'
 const app = getApp()
-
-// 地址转换格式1
-const formatAreaList = (areaList) => {
-  let provinceArr = []
-  let cityArrObj = {}
-  let areaArrObj = {}
-
-  areaList.forEach((item, index) => {
-    provinceArr.push(item.arName)
-    let cityArr = item.list.map(i => {
-      return i.arName
-    })
-
-    cityArrObj[item.arName] = cityArr
-
-    item.list.forEach((value, count) => {
-      let areaArr = value.list.map(j => {
-        return j.arName
-      })
-      areaArrObj[value.arName] = areaArr
-    })
-
-  })
-  return {
-    provinceArr,
-    cityArrObj,
-    areaArrObj
-  }
-}
 
 Page({
 
@@ -136,7 +112,9 @@ Page({
     areaArrObj: '',
     fullAddrObj: '',
     // 传给后台
-    areaCode: ''
+    areaCode: '',
+    // 是否是ios
+    isIOS: false,
   },
 
   /**
@@ -180,6 +158,13 @@ Page({
       areaList,
       fullAddrObj,
       fullAddr
+    })
+    // 调用方法获取机型
+    $getSystemInfoSync().then(res => {
+      console.log(res, '调用方法获取机型')
+      this.setData({
+        isIOS: res.platform == 'ios'
+      })
     })
   },
 
@@ -297,7 +282,7 @@ Page({
     let city = fullAddrObj['city']
     let area = fullAddrObj['area']
 
-    console.log(fullAddrObj,'fullAddrObj')
+    console.log(fullAddrObj, 'fullAddrObj')
 
     // 查询已确定的省市区在当前数组中的下标位置
     let cityArr = cityArrObj[province]

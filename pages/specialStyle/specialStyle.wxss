@@ -20,3 +20,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+.h800{
+  height: 800rpx;
+}

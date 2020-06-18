@@ -1,11 +1,13 @@
 {
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "API",
-    "backgroundColor": "#fff",
-    "backgroundColorTop": "#008c96",
-    "backgroundColorBottom": "#fff",
-    "usingComponents": {
-      "wmx-count-down": "../../component/countDown/countDown"
-    }
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "API",
+  "backgroundColor": "#fff",
+  "backgroundColorTop": "#008c96",
+  "backgroundColorBottom": "#fff",
+  "usingComponents": {
+    "wmx-count-down": "../../component/countDown/countDown"
+  },
+  "disableScroll": false,
+  "disableSwipeBack": true
 }

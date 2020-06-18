@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "wmx-dialog": "/component/dialog/dialog"
+  },
+  "navigationBarTitleText": "保存图片到相册",
+  "backgroundColorTop": "#FE4F45",
+  "backgroundColorBottom": "#E47174"
+}

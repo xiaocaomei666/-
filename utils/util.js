@@ -11,13 +11,15 @@ const debounce = (func, wait, immediate) => {
     var context = this
     var args = arguments
 
-    if (timeout) clearTimeout(timeout)
+    if (timeout) 
+      clearTimeout(timeout)
     if (immediate) {
       var callNow = !timeout
       timeout = setTimeout(function () {
         timeout = null
       }, wait)
-      if (callNow) func.apply(context, args)
+      if (callNow) 
+        func.apply(context, args)
     } else {
       timeout = setTimeout(function () {
         func.apply(context, args)
@@ -64,11 +66,11 @@ const throttle = (func, wait, type) => {
  * 获取url参数
  */
 
- const filterUrlParam = (urlSearch) => {
+const filterUrlParam = (urlSearch) => {
   let ret = {}
   let regParam = /([^&=]+)=([\w\W]*?)(&|$|#)/g
   if (urlSearch) {
-    var strParam = urlSearch; 
+    var strParam = urlSearch;
     var result
     while ((result = regParam.exec(strParam)) != null) {
       ret[result[1]] = result[2]
@@ -77,4 +79,16 @@ const throttle = (func, wait, type) => {
   return ret
 }
 
-export { debounce, throttle, filterUrlParam }
+/**
+ * 根据对象值找key值
+ * @param {String} value 对象value
+ * @param {Object} object 对象
+ * @param {Function} compare 比较函数
+ */
+const findKey = (value, object, compare = (a, b) => a === b) => {
+  return Object
+    .keys(object)
+    .find(k => compare(object[k], value))
+}
+
+export {debounce, throttle, filterUrlParam, findKey}

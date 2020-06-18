@@ -1,24 +1,17 @@
-//app.js
-// 埋点统计js引用 -s
-import WxTrack from './libs/wxTrack/index.js'
-// 埋点统计js引用 -e 
+// 引入微信增强性补丁
+require('./utils/wxPatch.js')
+// 发布订阅
+import WxEvent from './libs/wx-event.js'
 
 import {
-  $checkAuthSetting,
-  $toast,
   $routerPage,
-  $checkSession,
-  $wxLogin,
   $getUserInfo,
   $getCurrentPageUrl,
-  $getCurrentPageUrlWithArgsPromise,
-  $getSystemInfo
+  $getWXSystemInfo
 } from './utils/wxUtil.js'
 
-import {
-  filterUrlParam
-} from './utils/util.js'
-import WxEvent from './libs/wx-event.js'
+import {filterUrlParam} from './utils/util.js'
+
 const http = require('./request.js')
 const config = require('./config/index.js')
 console.log('----APP 白名单页面：-----', config.authWhitePages)
@@ -32,187 +25,67 @@ App({
   // 事件订阅发布
   wxEvent: new WxEvent(),
 
-  onLaunch: function() {
+  onLaunch: function (res) {
+    console.log('在app.js的生命周期onLaunch中获取分享群后返回的数据 => 可以获取shareTicket', res)
+    this.globalData.shareTicket = res.shareTicket
+
     // 全局检测设备
     this.globalGetSystemInfo()
 
-    // 获取小程序更新机制兼容
-    if (wx.canIUse('getUpdateManager')) {
-      const updateManager = wx.getUpdateManager()
-      updateManager.onCheckForUpdate(function(res) {
-        // 请求完新版本信息的回调
-        if (res.hasUpdate) {
-          updateManager.onUpdateReady(function() {
-            wx.showModal({
-              title: '更新提示',
-              content: '新版本已经准备好，是否重启应用？',
-              success: function(res) {
-                if (res.confirm) {
-                  // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-                  updateManager.applyUpdate()
-                }
-              }
-            })
-          })
-          updateManager.onUpdateFailed(function() {
-            // 新的版本下载失败
-            wx.showModal({
-              title: '已经有新版本了哟~',
-              content: '新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~',
-            })
-          })
-        }
-      })
-    } else {
-      // 如果希望用户在最新版本的客户端上体验您的小程序，可以这样子提示
-      wx.showModal({
-        title: '提示',
-        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
-      })
-    }
+    // 获取小程序更新机制兼容 - 放在onLaunch避免更新机制影响用户下单流程
+    $wxAppUpdateVersion()
   },
 
-  onShow: function(opts) {
+  onShow: function (opts) {
     // 调用全局场景值函数
     this.globalGetAppOnShowOpts(opts)
-    // 调用全局检测授权情况
-    this.globalAuthSetting()
+
+    // 放在onShow 为了避免手动取消微信授权
+    this.globalCheckLoginStatus()
   },
 
-  onHide: function() {
+  onHide: function () {
     console.log('App onHide')
     // 销毁事件
-    this.wxEvent.off()
+    this
+      .wxEvent
+      .off()
   },
 
-  // 全局检测授权情况
-  globalAuthSetting() {
-    $checkAuthSetting().then(res => {
-      if (res.authSetting['scope.userInfo']) {
-        // 已经授权操作
-        console.log('----APP 全局检测：已授权----')
-
-        // todo 获取用户信息并保存
-        $getUserInfo().then(res => {
-          let userInfo = res
-          this.globalData.userInfo = userInfo
-          // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-          // 所以此处加入 callback 以防止这种情况
-          if (this.userInfoReadyCallback) {
-            this.userInfoReadyCallback(userInfo)
-          }
-          return userInfo
-        }).then(userInfo => {
-          let loginParams = userInfo
-          // 检测 session_key状态
-          $checkSession().then(sessionRes => {
-            console.log('----APP session_key 未过期 ----', sessionRes)
-          }).catch(sessionErr => {
-            console.log('----APP session_key 已过期 ----', sessionErr)
-            // 过期重新调用微信wx.login登录
-            $wxLogin().then(wxRes => {
-              console.log('----APP 重新登录-> wxlogin:----', wxRes)
-              let code = wxRes.code
-              wx.setStorageSync("code", code)
-              loginParams.code = code
-              this.func.$post('login', loginParams, reqRes => {
-                let {
-                  code,
-                  token
-                } = reqRes
-                if (code == 0) {
-                  wx.setStorageSync("token", token)
-                } else {
-                  $toast('网络错误！')
-                }
-              })
-            })
-          })
-        })
-
-      } else {
-        // 未授权跳转授权页面
-        console.log('----APP 未授权 ----')
-        $getCurrentPageUrlWithArgsPromise().then(res => {
-          console.log('----APP 当前打开页面URL：----', res)
-          let currentUrl = $getCurrentPageUrl()
-          let isInPageAuthWhite = checkAuthWhitePage(currentUrl, config.authWhitePages)
-          return isInPageAuthWhite ? isInPageAuthWhite : res
-        }).then(res => {
-          if (res !== true) {
-            console.log('----APP 非白名单页面跳转授权页面 ----')
-            let loginCallBackUrl = res
-            $routerPage('/pages/login/login', 'redirectTo').then(() => {
-              let isHasLoginCallBackUrl = wx.getStorageSync('loginCallBackUrl') || ''
-              if (!isHasLoginCallBackUrl) {
-                wx.setStorageSync('loginCallBackUrl', loginCallBackUrl)
-              }
-            })
-          } else {
-            console.log('----APP 白名单页面不跳转授权页面 ----')
-          }
-        })
-      }
+  // 全局检授权、登录状态
+  globalCheckLoginStatus() {
+    appCheckLoginStatus().then(res => {
+      // console.log('获取用户信息:', res)
+      this.globalData.userInfo = res
     }).catch(err => {
-      console.log('----APP $checkAuthSetting error ----', err)
-      $toast('微信授权接口请求失败！')
-    })
+        // console.log('获取用户信息报错：', err)
+      }). finally(() => {
+        // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回 所以此处加入 callback 以防止这种情况
+        if (this.userInfoReadyCallback) {
+          const userInfo = this.globalData.userInfo
+          this.userInfoReadyCallback(userInfo)
+        }
+      })
   },
 
   // 全局检测设备
   globalGetSystemInfo() {
-    // 获取本地记录设备参数
-    $getSystemInfo().then(res => {
-      console.log('sysInfo', res)
-      // 是否是苹果手机
-      let isIphone = res.model.indexOf('iPhone') !== -1
-      this.globalData.isIphone = isIphone
-
-      let {
-        screenHeight,
-        pixelRatio
-      } = res
-      // 是否是 iPhoneX 手机
-      if (isIphone && screenHeight >= 812) {
-        this.globalData.isIpx = true
-      } else {
-        this.globalData.isIpx = false
-      }
-
-      // 是否是全面屏的手机
-      if (this.globalData.isIpx || (screenHeight > 736 && pixelRatio >= 2.6)) {
-        this.globalData.isFullDisplay = true
-      } else {
-        this.globalData.isFullDisplay = false
-      }
-
-      console.log('----isIphone ：----', this.globalData.isIphone)
-      console.log('----System Iphone X +：----', this.globalData.isIpx)
-      console.log('----isFullDisplay ：----', this.globalData.isFullDisplay)
-
-      if (this.systemInfoCallback) {
-        this.systemInfoCallback({
-          isIphone: this.globalData.isIphone,
-          isIpx: this.globalData.isIpx,
-          isFullDisplay: this.globalData.isFullDisplay
-        })
-      }
+    $getWXSystemInfo().then(res => {
+      const {isIpx, isFullDisplay} = res
+      this.globalData.isIpx = isIpx
+      this.globalData.isFullDisplay = isFullDisplay
     })
   },
 
-  // 全局场景值
+  // 全局场景值 -- bug
   globalGetAppOnShowOpts(opts) {
     console.log('App进入场景值：', opts)
     this.globalData.appScene = opts
     let sceneCode = opts.scene
-    let {
-      scene
-    } = opts.query
+    let {scene} = opts.query
     if (scene) {
       let decodeScene = filterUrlParam(decodeURIComponent(scene))
-      let {
-        t1
-      } = decodeScene
+      let {t1} = decodeScene
       // 限制扫描进入-> 防止切换后台回来二次操作
       if (t1 && (sceneCode == 1047 || sceneCode == 1048 || sceneCode == 1049)) {
         wx.removeStorageSync('code')
@@ -232,10 +105,8 @@ App({
     appScene: null,
     // 社区服务站code
     serviceStationCode: null,
-    // 实体卡订单数据
-    entityCardOrderInfo: null,
-    // 新年大礼包订单数据
-    newYearOrderInfo: null,
+
+    shareTicket: null
   },
   func: {
     $post: http.$post,

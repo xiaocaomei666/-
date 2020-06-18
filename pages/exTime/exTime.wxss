@@ -1,0 +1,5 @@
+/* pages/exTime/exTime.wxss */
+.mb30{
+  margin-bottom: 30rpx;
+  display: block;
+}

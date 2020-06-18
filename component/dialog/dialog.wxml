@@ -1,5 +1,5 @@
 <!--components/dialog/dialog.wxml-->
-<view class="dhsq-dialog {{ visible ? 'active' : '' }}">
+<view class="dhsq-dialog {{ visible ? 'active' : '' }} {{ isRadius ? 'dialog-radius' : '' }}">
 
     <view class="dialog-body {{ anim ? 'anim bounceIn' :'' }}">
       <image wx:if="{{ closeable }}" bindtap="handleTapClose" class="icon-close" src="./images/notice_icon_close.png" />

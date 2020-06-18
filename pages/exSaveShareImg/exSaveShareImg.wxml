@@ -1,0 +1,52 @@
+<!--pages/exSaveShareImg/exSaveShareImg.wxml-->
+<view class="container">
+  <!-- 底图 -->
+  <image src='http://dtsimg.dinghu.com/xcx/recommend/bg.png' mode='widthFix' class='bg-img'></image>
+
+
+  <!-- 二维码 -->
+  <image src='{{ qrCode }}' class='xcx-img' mode='widthFix' wx:if="{{ qrCode }}"></image>
+
+  <!-- 主内容 -->
+  <view class='content'>
+
+    <!-- 礼品展示 -->
+    <view class='white-box'>
+
+      <!-- 登录状态 -->
+      <view class='flex-col-start-start desc-login'>
+        <view class='flex-row-start'>
+          <view class="logo-img">
+            <open-data type="userAvatarUrl"></open-data>
+          </view>
+
+          <view class='flex-col-center-start login-desc'>
+            <text>邀请官：xxx</text>
+            <text>认证ID：xxx</text>
+          </view>
+        </view>
+        <image src='http://dtsimg.dinghu.com/xcx/recommend/btn_core.png' class='core-img-btn' mode='widthFix' catchtap='saveImg'></image>
+      </view>
+
+    </view>
+
+  </view>
+
+</view>
+
+<!-- 获取用户相册授权弹窗 /s -->
+<wmx-dialog visible="{{ photoDialogVisible }}" content="为了能保存图片，请您允许授权保存图片或视频到您的相册" submitButtonType="openSetting" bind:cancel="closeDialog" bind:submit="submitPhotoDialog">
+</wmx-dialog>
+<!-- 获取用户相册授权弹窗 /e -->
+
+<!-- 生成专属海报 -->
+<view class='dialog' wx:if="{{ shareDialog }}" catchtouchmove='handleTouchMove'>
+  <view class='absolute-center share-more'>
+    <!-- 底图 -->
+    <painter customStyle='width: 573rpx;height:1010rpx;' palette="{{posterTemplate}}" bind:imgOK="saveImgToPhoto" />
+  </view>
+
+  <!-- 关闭按鈕 -->
+  <image src='http://dtsimg.dinghu.com/xcx/recommend/rule_btn_close.png' class='close-img' catchtap='closeDialog'></image>
+
+</view>

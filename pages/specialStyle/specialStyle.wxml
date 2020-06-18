@@ -4,3 +4,14 @@
 <view class="word-line">凄凄切切群群群群群群群群群群群群群群群群群群群群群群群群群群群群群群群</view>
 <view class="word-line">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</view>
 <view class="word-line">睡觉觉接电话333333333333ssdddddddddddddddddddddddddddddddddddddd</view>
+
+
+    <scroll-view class="scroll-view-x" scroll-y="true" scroll-into-view="{{ scrollView }}" scroll-with-animation="true" bindscroll="bindscroll" style="height: 800rpx;">
+      <!-- <view id="{{'gift_'+index}}" class="scroll-view-box" data-index="{{ index }}"> -->
+      <view class="h800">第一天的数据</view>
+      <view class="h800">第二天的数据</view>
+      <view class="h800">第三天的数据</view>
+      <!-- </view> -->
+
+    </scroll-view>
+

@@ -1,7 +1,19 @@
 /**
  * 封装相关微信方法
  */
-const config = require('../config/index.js')
+
+// 配置文件
+const CONFIG = require('../config/index.js')
+
+
+/*******************  接口状态码code /s  ***********************/
+const $NO_REHISTER = 1 // 未注册
+const $SUCCESS = 0 // 成功
+const $TOKEN_AUTH = 401 // 失效、非法token
+const $ERROR = 500 // 失败
+const $WARNING = 600 // 警告
+/*******************  接口状态码code /e  ***********************/
+
 
 // 添加promise finally 事件
 Promise.prototype.finally = function(callback) {
@@ -24,13 +36,7 @@ Promise.prototype.finally = function(callback) {
   );
 }
 
-
-// 接口返回code状态码
-const $SUCCESS = 0 // 成功
-const $ERROR = 500 // 错误
-const $WARNING = 600 // 返回其他
-const $TOKENFAIL = 401 // token失效
-
+/*******************  微信方法封装 /s  ***********************/
 /**
  * 
  * @param {any} str 
@@ -99,6 +105,43 @@ const $modal = (title = '提示', content = 'tips', showCancel = true, cancelTex
       cancelColor,
       confirmText,
       confirmColor,
+      success: res => {
+        if (res.confirm) {
+          // 确定
+          resolve(res)
+        } else if (res.cancel) {
+          // 取消
+          reject(res)
+        }
+      },
+      fail: err => reject(err)
+    })
+  })
+}
+
+/**
+ *  modal Promise 封装（对象传值版）
+ * @param {String} title 提示的标题
+ * @param {String} content 提示的内容
+ * @param {Boolean} showCancel 是否显示取消按钮，默认为 true
+ * @param {String} cancelText 取消按钮的文字，默认为"取消"，最多 4 个字符
+ * @param {String} cancelColor 取消按钮的文字颜色，默认为"#BFBFBF"
+ * @param {String} confirmText 确定按钮的文字，默认为"确定"，最多 4 个字符
+ * @param {String} confirmColor 确定按钮的文字颜色，默认为"#00b94e"
+ */
+const $dialog = (dialogConfig) => {
+  return new Promise((resolve, reject) => {
+    let config = Object.assign({
+      title: '温馨提示',
+      content: 'tips',
+      showCancel: true,
+      cancelText: '取消',
+      cancelColor: '#BFBFBF',
+      confirmText: '确认',
+      confirmColor: '#00b94e'
+    }, dialogConfig)
+    wx.showModal({
+      ...config,
       success: res => {
         if (res.confirm) {
           // 确定
@@ -187,6 +230,20 @@ const $setNavBar = (title = '微信小程序') => {
       fail: err => reject(err)
     })
   })
+}
+
+/**
+ * showNavBarLoading 封装
+ */
+const $showNavBarLoading = () => {
+  wx.showNavigationBarLoading()
+}
+
+/**
+ * hideNavBarLoading 封装
+ */
+const $hideNavBarLoading = () => {
+  wx.hideNavigationBarLoading()
 }
 
 /**
@@ -419,11 +476,13 @@ const $routerPage = (url = '', type = 'navigateTo') => {
         break
       case 'switchTab':
         if (url.indexOf('?') !== -1) return reject('url error')
-        wx.switchTab({
-          url,
-          success: res => resolve(res),
-          fail: err => reject(err)
-        })
+        setTimeout(() => {
+          wx.switchTab({
+            url,
+            success: res => resolve(res),
+            fail: err => reject(err)
+          })
+        }, 500)
         break
       case 'reLaunch':
         setTimeout(() => {
@@ -496,6 +555,60 @@ const $getSystemInfoSync = () => {
   })
 }
 
+/**
+ * 微信更新机制Promise 封装
+ */
+const $wxAppUpdateVersion = () => {
+    
+  // 小程序更新机制兼容
+  if (wx.canIUse('getUpdateManager')) {
+    const updateManager = wx.getUpdateManager()
+    updateManager.onCheckForUpdate(function(res) {
+      // 请求完新版本信息的回调
+      if (res.hasUpdate) {
+        updateManager.onUpdateReady(function() {
+          $dialog({
+            title: '更新提示',
+            content: '新版本已经准备好，即将重启应用！',
+            showCancel: false,
+            confirmText: '确 定'
+          }).then(res => {
+            // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+            updateManager.applyUpdate()
+          }).catch(err => {
+            console.log('取消更新.')
+          })
+        })
+        updateManager.onUpdateFailed(function() {
+          // 新的版本下载失败
+          $dialog({
+            title: '更新提示',
+            content: '抱歉！新版本更新失败，请您删除当前小程序，重新搜索打开哟~',
+            showCancel: false,
+            confirmText: '确 定'
+          }).then(res => {
+            console.log('确定')
+          }).catch(err => {
+            console.log('取消')
+          })
+          
+        })
+      }
+    })
+  } else {
+    // 提示希望用户在最新版本的客户端上体验您的小程序 
+    $dialog({
+      title: '提示',
+      content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。',
+      showCancel: false,
+      confirmText: '确 定'
+    }).then(res => {
+      console.log('确定')
+    }).catch(err => {
+      console.log('取消')
+    })
+  }
+}
 
 /**
  *  获取自定设备参数
@@ -506,11 +619,8 @@ const $getWXSystemInfo = () => {
       const sysInfo = {}
       let isIphone = res.model.indexOf('iPhone') !== -1
       sysInfo.isIphone = isIphone
-      let {
-        screenHeight,
-        pixelRatio
-      } = res
-
+      let { screenHeight, pixelRatio } = res
+      
       // 判断ipx以上设备
       if (isIphone && screenHeight >= 812) {
         sysInfo.isIpx = true
@@ -554,7 +664,6 @@ const $wxpay = (timeStamp, nonceStr, packageWxa, signType = 'MD5', paySign) => {
     });
   })
 }
-
 
 /**
  * getNetworkType [当前网络情况]  Promise 封装
@@ -731,20 +840,114 @@ const $downloadFile = (url) => {
 }
 
 /**
+ * 打电话 Promise 封装
+ * @param {String} phoneNumber 拨打电话
+ */
+const $makePhoneCall = (phoneNumber) => {
+  return new Promise((resolve, reject) => {
+    wx.makePhoneCall({
+      phoneNumber,
+      success: res => {
+        resolve(res)
+      },
+      fail: err => {
+        reject(err)
+      }
+    });
+  })
+}
+
+/**
+ * previewImage promise 封装版本
+ * @param {String} current 当前显示图片的http链接
+ * @param {*} urls 需要预览的图片http链接列表
+ */
+const $previewImage = (current = '', urls = []) => {
+  return new Promise((resolve, reject) => {
+    wx.previewImage({
+      current, // 当前显示图片的http链接
+      urls, // 需要预览的图片http链接列表
+      success: res => resolve(res),
+      fail: err => reject(err),
+      complete: () => {}
+    })
+  })
+}
+
+/**
+ *  更新用户信息
+ * @param {Object} app 当前页面 App 实例 
+ * @param {Object} _this 当前页面 指向this
+ */
+const $wxUserInfoReady = (app, _this) => {
+  return new Promise((resolve, reject) => {
+    if (app.globalData.userInfo) {
+      _this.setData({
+        hasUserInfo: true,
+        userInfo: app.globalData.userInfo
+      })
+      resolve(app.globalData.userInfo)
+    } else if (wx.canIUse('button.open-type.getUserInfo')){
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.userInfoReadyCallback = res => {
+        if (res) {
+          // 授权成功
+          app.globalData.userInfo = res
+          _this.setData({
+            hasUserInfo: true,
+            userInfo: res
+          })
+          resolve(res)
+        } else {
+          // 授权失败
+          reject(null)
+        }
+      }
+    } else {
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res
+          
+          _this.setData({
+            hasUserInfo: true,
+            userInfo: res
+          })
+          resolve(res)
+        }
+      })
+    }
+  })
+}
+
+/*******************  微信方法封装 /e  ***********************/
+
+
+/*******************  网络请求库封装 /s  ***********************/
+/**
  * 基础网络请求request
  * @param {String} url 请求接口path
  * @param {Object} data 请求参数 
+ * @param {Boolean} isShowLoading 是否显示全局loading
  * @param {Boolean} needToken 是否需求token
  * @param {String} method 请求类型
  * @param {String} contentType  请求和响应的HTTP内容类型
  */
-const request = (url = '', data = {}, needToken = true, contentType = 'application/json', method = 'GET') => {
+const request = (url = '', data = {}, isShowLoading = false, needToken = true, contentType = 'application/json', method = 'GET') => {
   const token = needToken ? wx.getStorageSync('token') : ''
-  const baseURL = config.requestBaseURL
-  const reqURL = baseURL + url
-  $showLoading()
+  const reqURL = CONFIG.requestBaseURL + url.replace(/^\/*/,'')
+
+  // 居中型loading 显示
+  if (isShowLoading) {
+    $showLoading()
+  }
+
+  // 导航栏型loading 显示
+  $showNavBarLoading()
+
   return new Promise((resolve, reject) => {
-    wx.request({
+    const requestTask =  wx.request({
       url: reqURL, //开发者服务器接口地址,
       data, //请求的参数,
       method: method.toUpperCase(),
@@ -755,101 +958,104 @@ const request = (url = '', data = {}, needToken = true, contentType = 'applicati
       dataType: 'json', //，默认json, 设置json会尝试对返回的数据做一次 JSON.parse
       success: res => {
         // 请求开发者服务器成功
-        const result = res.data
+        const respResult = res.data
         const {
           code,
-          msg
-        } = result
+          msg,
+          data
+        } = respResult
         switch (code) {
           case $SUCCESS:
             // SUCCESS
-            delete result.code
-            delete result.msg
-
-            // console.log('\n')
-            console.group('------------ 请求参数 / S----------------')
-            console.log(`%cBaseURL:`, 'font-weight:bold;', baseURL)
-            console.log(`%cPath:`, 'font-weight:bold;', url)
-            console.log(`%cMethod:`, 'font-weight:bold;', method)
-            console.log(`%cParams:`, 'font-weight:bold;', data)
-            console.log(`%cToken:`, 'font-weight:bold;', needToken)
-            console.log(`%cResult:`, 'font-weight:bold;', result)
-            console.groupEnd()
-            console.log('\n')
-            resolve(result)
+            resolve(data)
             break
           case $WARNING:
             // WARNING
-            reject(msg)
+            reject(respResult)
             break
-          case $TOKENFAIL:
-            // TOKENFAIL
-            // todo 授权跳转
+          case $TOKEN_AUTH:
+            // token非法、失效
+            // todo -> 重新登录或者跳转登录
+
             break
           case $ERROR:
-            // ERROR
-            reject(msg)
+            // 接口错误
+            $toast(`网络错误：500`)
+            reject(respResult)
             break
           default:
-            reject(msg)
+            reject(respResult)
         }
       },
-      fail: () => {
+      fail: err => {
         // 请求开发者服务器失败
-
+        $toast(`网络错误: ${ err.errMsg }`)
       },
       complete: () => {
         // 请求开发者服务器完成
-        $hideLoading()
+        if (isShowLoading) {
+          $hideLoading()
+        }
+        $hideNavBarLoading()
       }
     })
   })
 }
 
+
 /**
  *  网络请求GET方法
  * @param {String} url 请求接口path
  * @param {Object} data 请求参数 
+ * @param {Boolean} isShowLoading 是否显示全局loading
  * @param {Boolean} needToken 是否需求token
  */
-const $get = (url, data, needToken, contentType) => request(url, data, needToken, contentType = 'application/json', 'GET')
+const $get = (url, data, isShowLoading, needToken, contentType) => request(url, data, isShowLoading, needToken, 'GET')
 
 /**
  * 网络请求POST方法
  * @param {String} url 请求接口path
  * @param {Object} data 请求参数 
+ * @param {Boolean} isShowLoading 是否显示全局loading
  * @param {Boolean} needToken 是否需求token
  */
-const $post = (url, data, needToken, contentType) => request(url, data, needToken, contentType = 'application/json', 'POST')
+const $post = (url, data, isShowLoading,needToken, contentType) => request(url, data, isShowLoading, needToken, 'POST')
 
 /**
  * 网络请求PUT方法
  * @param {String} url 请求接口path
  * @param {Object} data 请求参数 
+ * @param {Boolean} isShowLoading 是否显示全局loading
  * @param {Boolean} needToken 是否需求token
  */
-const $put = (url, data, needToken, contentType) => request(url, data, needToken, contentType = 'application/json', 'PUT')
+const $put = (url, data, isShowLoading, needToken) => request(url, data, isShowLoading, needToken, 'PUT')
 
 /**
  * 网络请求DELETE方法
  * @param {String} url 请求接口path
  * @param {Object} data 请求参数 
+ * @param {Boolean} isShowLoading 是否显示全局loading
  * @param {Boolean} needToken 是否需求token
  */
-const $del = (url, data, needToken, contentType) => request(url, data, needToken, contentType = 'application/json', 'DELETE')
+const $del = (url, data, isShowLoading, needToken) => request(url, data, isShowLoading, needToken, 'DELETE')
+/*******************  网络请求库封装 /e  ***********************/
 
 export {
+  $NO_REHISTER,
   $SUCCESS,
+  $TOKEN_AUTH,
   $ERROR,
   $WARNING,
-  $TOKENFAIL,
   $toast,
   $showLoading,
   $showActionSheet,
   $hideLoading,
   $hideToast,
   $modal,
+  $dialog,
   $setNavBar,
+  $showNavBarLoading,
+  $hideNavBarLoading,
   $setNarBarColor,
   $showNarBarLoading,
   $hideNarBarLoading,
@@ -879,7 +1085,6 @@ export {
   $getUserInfo,
   $getSystemInfo,
   $getSystemInfoSync,
-  $getWXSystemInfo,
   $getCurrentPageUrl,
   $getCurrentPageUrlWithArgs,
   $getCurrentPageUrlWithArgsPromise,
@@ -887,5 +1092,10 @@ export {
   $authorize,
   $openSetting,
   $saveImageToPhoto,
-  $downloadFile
+  $downloadFile,
+  $makePhoneCall,
+  $previewImage,
+  $wxAppUpdateVersion,
+  $getWXSystemInfo,
+  $wxUserInfoReady
 }

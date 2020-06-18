@@ -1,0 +1,3 @@
+<!--pages/exUpdateMsg/exUpdateMsg.wxml-->
+
+<button plain catchtap="updateMsg" class="btn" data-type="nickname">更新个人信息</button>

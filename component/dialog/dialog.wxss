@@ -117,6 +117,7 @@
   background: linear-gradient(90deg, rgba(255, 144, 22, 1), rgba(255, 180, 2, 1));
 }
 
+
 .icon-close {
   position: absolute;
   top: -78rpx;
@@ -125,6 +126,17 @@
   height: 50rpx;
 }
 
+/* 圆角 /s */
+.dialog-radius .dialog-content{
+  border-radius:30rpx;
+}
+.dialog-radius .btn {
+  border-radius:40rpx;
+}
+.dialog-radius .btn.submit{
+  background:linear-gradient(-50deg,rgba(54,218,123,1),rgba(16,198,97,1));
+}
+/* 圆角 /e */
 /* 动效 */
 
 .anim {

@@ -1,5 +1,6 @@
 /* pages/exAddress/exAddress.wxss */
-.picker-address{
+
+.picker-address {
   width: 250rpx;
   height: 80rpx;
   border-bottom: 1rpx solid salmon;
@@ -7,6 +8,33 @@
   margin: 0 auto 20rpx;
 }
 
-.pickerstyle{
+.pickerstyle {
   color: #ccc;
+}
+
+.placeholder-input {
+  font-size: 28rpx;
+  color: #bfbfbf;
+}
+
+.textarea {
+  width: 450rpx;
+  padding: 20rpx 0;
+  margin: 0 auto;
+  border-bottom: 1rpx solid salmon;
+  box-sizing: border-box;
+}
+
+.addr {
+  line-height: 35rpx;
+  width: 475rpx;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 10rpx;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.iosTextArea {
+  padding-left: 0;
 }

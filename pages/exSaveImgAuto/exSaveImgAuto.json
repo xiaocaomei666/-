@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "wmx-dialog": "/component/dialog/dialog",
+    "painter": "/component/painter/painter"
+  },
+  "navigationBarTitleText": "默认保存海报到相册"
+}

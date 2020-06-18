@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 9,
+			"current": 18,
 			"list": [
 				{
 					"id": -1,
@@ -81,11 +81,16 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 7,
 					"name": "常用实例",
 					"pathName": "pages/example/example",
 					"query": "",
-					"scene": null
+					"scene": 1044,
+					"shareInfo": {
+						"groupName": "测试模拟群0",
+						"shareName": "Wu_fqMUWDuOikjgl2F7AkHlIiTh8Jx8mQqHgqh6pvCk@cr4dev",
+						"shareKey": "B51op39cLKM-CGySlEzttPh8HsHpj-EFukbdAqZKTKFQIt1OGnZEulx0EkGE6hmlvHDeB2U69T5OK2S5MYOcpA~~"
+					}
 				},
 				{
 					"id": -1,
@@ -98,6 +103,70 @@
 					"id": -1,
 					"name": "实例 -- 地址组件",
 					"pathName": "pages/exAddress/exAddress",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实例 -- 过滤器",
+					"pathName": "pages/exFilter/exFilter",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实例 -- 工具类",
+					"pathName": "pages/exTime/exTime",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实例 -- 抽奖",
+					"pathName": "pages/exPrizeDraw/exPrizeDraw",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实例 -- 保存图片",
+					"pathName": "pages/exSaveImg/exSaveImg",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登录",
+					"pathName": "pages/login/login",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 15,
+					"name": "实例 -- 保存海报",
+					"pathName": "pages/exSaveShareImg/exSaveShareImg",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实例 -- 默认保存海报",
+					"pathName": "pages/exSaveImgAuto/exSaveImgAuto",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "实例 -- 更新个人信息",
+					"pathName": "pages/exUpdateMsg/exUpdateMsg",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 18,
+					"name": "特殊样式",
+					"pathName": "pages/specialStyle/specialStyle",
+					"query": "",
 					"scene": null
 				}
 			]

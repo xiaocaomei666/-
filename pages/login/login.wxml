@@ -1,0 +1,11 @@
+<!--pages/login/login.wxml-->
+<view class="login">
+  <view class="login-logo">
+    <image src='../../images/logo.png'></image>
+  </view>
+  <view class="login-desc">使用该小程序需要获取微信授权，请点击【允许】以保证能正常访问小程序</view>
+  <view class="login-button">
+    <button wx:if="{{canIUse}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfo" hover-class='cl35'>立即授权</button>
+    <button hover-class='cl35' wx:else>请升级微信版本</button>
+  </view>
+</view>

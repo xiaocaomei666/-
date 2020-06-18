@@ -1,0 +1,33 @@
+<!--pages/exFilter/exFilter.wxml-->
+<text class='title'>1. 价格后保留两位小数位</text>
+<text class='mb10'>12 => {{ filter.numToFixed(12,2) }}</text>
+
+<text class='title'>2. 价格后保留三位小数位</text>
+<text class='mb10'>22.2999 => {{ filter.numToFixed(22.2999,3) }}</text>
+
+<text class='title'>3. 过滤掉时分秒并且转换年月日分隔符</text>
+<text class='mb10'>time => {{ filter.sliceDateToDot(time) }}</text>
+
+<text class='title'>4. 隐藏手机号码中间4位</text>
+<text class='mb10'>phone => {{ filter.hidePhoneMiddle(phone) }}</text>
+
+<text class='title'>5. 隐藏手机号码中间4位</text>
+<text class='mb10'>phone => {{ filter2.formatData(phone) }}</text>
+
+<text class='title'>5. 正则隐藏手机号码中间4位</text>
+<text class='mb10'>phone => {{ filter.hidePhoneReg(phone) }}</text>
+
+<!-- 引入过滤器 -->
+<wxs src="../../filter/filter.wxs" module="filter" />
+
+<!-- 格式过滤器 -->
+<wxs module="filter2">
+  var formatData = function(params) {
+    if (params && params != 'null') {
+      return params.slice(0, 3) + '****' + params.slice(7)
+    } else {
+      return ''
+    }
+  }
+  module.exports.formatData = formatData;
+</wxs>

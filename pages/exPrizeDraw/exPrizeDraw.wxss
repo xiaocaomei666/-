@@ -1,0 +1,230 @@
+/* pages/exPrizeDraw/exPrizeDraw.wxss */
+
+.page {
+  width: 100%;
+  height: 2062rpx;
+  background: linear-gradient(-34deg, rgba(176, 63, 213, 1) 0%, rgba(254, 79, 69, 1) 100%);
+  background-image: url('http://dtsimg.dinghu.com/xcx/water_vip/bg.png');
+  background-repeat: no-repeat;
+  background-size: 750rpx 2062rpx;
+  background-position: top center;
+  padding-top: 270rpx;
+  box-sizing: border-box;
+}
+
+.content {
+  width: 680rpx;
+  height: 477rpx;
+  margin: 0 auto 30rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+.wheel-bg {
+  width: 680rpx;
+  height: 480rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+}
+
+.content .tip {
+  font-size: 23rpx;
+  font-weight: 500;
+  color: #fff;
+  position: absolute;
+  top: 50rpx;
+  right: 76rpx;
+  z-index: 4;
+}
+
+.btn-start {
+  width: 314rpx;
+  margin-right: 25rpx;
+  background-color: transparent;
+}
+
+.btn-rule {
+  width: 280rpx;
+}
+
+.reward {
+  width: 100%;
+  height: 648rpx;
+  margin: 42rpx auto 30rpx;
+  box-sizing: border-box;
+}
+
+.award-img {
+  width: 750rpx;
+}
+
+.record {
+  width: 672rpx;
+  height: 362rpx;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: 2rpx 2rpx 3rpx 0 rgba(57, 57, 57, 0.42);
+  border-radius: 20rpx;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+.record-item {
+  width: 100%;
+  height: 30rpx;
+  color: #f34c5c;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+.dialog {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+}
+
+.close {
+  position: absolute;
+  top: 10rpx;
+  width: 72rpx;
+  height: 72rpx;
+}
+
+.close-left {
+  left: 10rpx;
+}
+
+.close-right {
+  top: 132rpx;
+  right: 10rpx;
+}
+
+.close-lose {
+  top: 120rpx;
+}
+
+.dialog .main {
+  width: 76.2%;
+  height: 41.1%;
+  top: 28.2%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.lose-main {
+  width: 664rpx;
+  height: 963rpx;
+  transform: translate(-50%, -40%);
+}
+
+.luck-main {
+  width: 664rpx;
+  height: 1220rpx;
+}
+
+.luck-main image {
+  width: 100%;
+}
+
+.luck-show {
+  width: 540rpx;
+  height: 422rpx;
+  position: absolute;
+  top: 316rpx;
+  left: 58rpx;
+}
+
+.luck-show image {
+  width: 100%;
+  height: 100%;
+}
+
+.desc {
+  width: 470rpx;
+  font-size: 22rpx;
+  color: #fff;
+  line-height: 36rpx;
+  text-align: left;
+  position: absolute;
+  left: 50%;
+  top: 800rpx;
+  transform: translateX(-50%);
+}
+
+.lose-main image {
+  width: 100%;
+}
+
+.main-hidden {
+  overflow-y: hidden !important;
+}
+
+.noprize-img {
+  width: 100%;
+}
+
+.prizes {
+  padding-top: 25rpx;
+  padding-left: 18rpx;
+}
+
+.prizes-main {
+  margin-bottom: 20rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.prizes-main image {
+  width: 140rpx;
+  height: 140rpx;
+  margin-right: 25rpx;
+  border-radius: 10rpx;
+}
+
+.prizes-col {
+  height: 140rpx;
+}
+
+.prizes-col>text:first-child {
+  font-size: 34rpx;
+  font-weight: bold;
+  margin: 5rpx 0 25rpx;
+}
+
+.list {
+  width: 86%;
+  height: 61.2%;
+  display: flex;
+  /* top: 22.8%; *//* top: 27.8%; */
+  top: -26.8%;
+  transform: translateX(-50%);
+  padding: 0 8rpx;
+  box-sizing: border-box;
+}
+
+.list-flex {
+  flex: 1;
+  position: relative;
+}
+
+.list-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0;
+  box-sizing: border-box;
+}
+
+.list-main image {
+  width: 181rpx;
+  height: 254rpx;
+  margin: 2px;
+}

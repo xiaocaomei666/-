@@ -1,0 +1,6 @@
+/* pages/exFilter/exFilter.wxss */
+
+.mb10 {
+  display: block;
+  margin-bottom: 30rpx;
+}

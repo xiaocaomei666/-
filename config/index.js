@@ -2,15 +2,16 @@
 
 /******************************** 定义环境 /s ********************************/
 // 以下选择定义环境（注意对应关系，下面有appId）
-const env = 'dev' // 开发环境
-// const env = 'test' // 测试环境
+// const env = 'dev' // 开发环境
+const env = 'test' // 测试环境
 // const env = 'prod' // 生产环境
 
 
 // 地址环境 map（注意对应关系）
 const envMap = {
   dev: 'http://192.168.10.171:8002/', // 开发环境
-  test: '', // 测试环境
+  // test: 'https://dtstest.dinghu.com/xcx/', // 测试环境
+  test: 'https://xcxt.dinghu.com/', // 测试环境
   prod: '', // 生产环境
 }
 
@@ -31,8 +32,20 @@ const authWhitePages = [
 
 // tabbar 页面
 const tabBarPages = [
-
+  'pages/index/index',
+  'pages/componentUse/componentUse',
+  'pages/specialStyle/specialStyle',
+  'pages/example/example'
 ]
+
+// 微信授权页面
+const wxAuthPage = 'pages/authorize/authorize'
+
+// 绑定手机号码页面 
+const loginPage = 'pages/login/login'
+
+// 默认进入页面 -- 订单页面
+const defaultPage = 'pages/order/order'
 
 const config = {
   // 小程序运行环境
@@ -47,6 +60,9 @@ const config = {
   },
   authWhitePages,
   tabBarPages,
+  wxAuthPage,
+  loginPage,
+  defaultPage,
   // 腾讯地图 key
   qqMapKey: 'PZRBZ-JB5R4-DQZUF-DEEDZ-Z6IIJ-J6FI7',
 }

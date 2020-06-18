@@ -19,14 +19,17 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
+// 判断某个时间是否在指定时间区间内
 const isDayBetween = (day, beginDay, endDay) => {
   return dayjs(day).isBetween(dayjs(beginDay), dayjs(endDay))
 }
 
+// 2018-08-08
 const getCurrentDate = (arg) => {
   return arg ? dayjs(arg).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD')
 }
 
+// 获取当前时间
 const getCurrentTime = () => {
   return dayjs().format('YYYY-MM-DD HH:mm:ss')
 }

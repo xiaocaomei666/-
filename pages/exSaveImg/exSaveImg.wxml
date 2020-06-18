@@ -1,0 +1,14 @@
+<!--pages/exSaveImg/exSaveImg.wxml-->
+<image src='http://dtsimg.dinghu.com/xcx/lucky_bag/img_bg.png' mode='widthFix' class='img'></image>
+
+<button class='saveImg' class='btn' catchtap='saveImg'>保存图片</button>
+
+<!-- 获取用户相册授权弹窗 /s -->
+<wmx-dialog visible="{{ photoDialogVisible }}" content="为了能保存图片，请您允许授权保存图片或视频到您的相册" submitButtonType="openSetting" bind:cancel="closeDialog" bind:submit="submitPhotoDialog">
+</wmx-dialog>
+<!-- 获取用户相册授权弹窗 /e -->
+
+<!-- 保存图片弹窗 -->
+<view class='dialog' catchtap='closeDialog' wx:if="{{ imgDialogVisible }}">
+  <image src='http://dtsimg.dinghu.com/xcx/lucky_bag/img_bg.png' mode='widthFix' class='absolute-center dialog-img anim bounceIn'></image>
+</view>

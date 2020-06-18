@@ -12,7 +12,16 @@
     "pages/wxRouter/wxRouter",
     "pages/wxSysInfo/wxSysInfo",
     "pages/exGlobalGet/exGlobalGet",
-    "pages/exAddress/exAddress"
+    "pages/exAddress/exAddress",
+    "pages/exFilter/exFilter",
+    "pages/distributorRegister/distributorRegister",
+    "pages/exTime/exTime",
+    "pages/exPrizeDraw/exPrizeDraw",
+    "pages/exSaveImg/exSaveImg",
+    "pages/login/login",
+    "pages/exSaveShareImg/exSaveShareImg",
+    "pages/exSaveImgAuto/exSaveImgAuto",
+    "pages/exUpdateMsg/exUpdateMsg"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -51,5 +60,28 @@
         "text": "常用实例"
       }
     ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true,
+  "functionalPages": true,
+  "requiredBackgroundModes": [
+    "audio"
+  ],
+  "subpackages": [],
+  "workers": "",
+  "plugins": {},
+  "preloadRule": {},
+  "resizable": false,
+  "navigateToMiniProgramAppIdList": [
+    "wxe5f52902cf4de896"
+  ],
+  "usingComponents": {},
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
   }
 }

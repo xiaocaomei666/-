@@ -1,0 +1,15 @@
+<!--pages/exTime/exTime.wxml-->
+<text class='title'>默认获取当前年时间</text>
+<text class='mb30'>{{ timeCur }}</text>
+
+<text class='title'>默认获取当前年月日</text>
+<text class='mb30'>{{ dateCur }}</text>
+
+<text class='title'>格式化指定时间：2018.8.8 12:12:12</text>
+<text class='mb30'>{{ dateFormate }}</text>
+
+<text class='title'>格式化指定时间：2018.8.8 12:12:12</text>
+<text class='mb30'>{{ timeFormate }}</text>
+
+<text class='title'>判断某个时间是否在指定时间区间内</text>
+<text class='mb30'>当天是否在2019年国庆假期之内：{{ isBetweenDateRange }}</text>

@@ -1,0 +1,104 @@
+<!--pages/waterVip/waterVip.wxml-->
+<view class='page'>
+  <!-- 滚屏区域 -->
+  <view class='content'>
+    <!-- 背景图 -->
+    <image src='{{ url }}machine_1.png' mode='widthFix' class='wheel-bg'></image>
+    <text class='tip'>剩余{{ chance || 0 }}次抽奖机会</text>
+
+    <!-- 主要内容 -->
+    <view class='absolute-center list'>
+
+      <view class='list-flex' wx:for="{{ wheelListCopy }}" wx:key="{{ index }}">
+      <!-- <view class='list-flex'> -->
+        <view class="list-main" style="transform: translateY({{ slideDistance }}px);{{ isDrawing ? item.transition : '' }}">
+          <image wx:for="{{ item.imgList }}" wx:key="index" src='{{ item }}' class='img'></image>
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+
+  <!-- 按钮区域 -->
+  <view class='flex-row-center'>
+    <!-- 点击抽奖 -->
+    <form bindsubmit="submitInfo" report-submit>
+      <button form-type="submit" class='btn-start' catchtap='drawLuck'>
+        <image src="{{ url }}btn_start.png" mode='widthFix' class='btn-start'></image>
+      </button>
+    </form>
+
+    <view class='flex-col-start-start'>
+      <!-- 活动规则 -->
+      <image src="{{ url }}btn_rule.png" mode='widthFix' class='btn-rule' catchtap='showRule'></image>
+      <!-- 我的奖品 -->
+      <image src="{{ url }}btn_mine.png" mode='widthFix' class='btn-rule' catchtap='showMyPrizes'></image>
+    </view>
+  </view>
+
+  <!-- 奖品区域 -->
+  <view class='reward'>
+    <image src="{{ url }}award.png" mode='widthFix' class='award-img'></image>
+  </view>
+
+  <!-- 中奖纪录 -->
+  <view class='record'>
+    <swiper autoplay="true" interval="2000" vertical="true" circular="true" class='record' display-multiple-items="7">
+      <swiper-item class='item' wx:for='{{ recordList }}' wx:key="index" class='record-item'>
+        {{ item }}
+      </swiper-item>
+    </swiper>
+  </view>
+</view>
+
+<!-- 活动规则弹窗 -->
+<view class='dialog' wx:if="{{ ruleDialog }}">
+  <view class='absolute-center  anim bounceIn'>
+    <image src='{{ url }}rule.png' mode='widthFix'></image>
+    <text class='close close-left' catchtap='closeDialog'></text>
+  </view>
+</view>
+
+<!-- 我的奖品弹窗 -->
+<view class='dialog' wx:if="{{ prizeDialog }}">
+  <view class='absolute-center anim bounceIn'>
+    <image src='{{ url }}lucky_prize_flame.png' mode='widthFix'></image>
+    <view class="absolute-center main {{ hadPrizes ? '' : 'main-hidden' }}">
+      <view class='prizes' wx:if="{{ hadPrizes }}">
+        <view wx:for="{{ prizesList }}" wx:key="{{ index }}" class='flex-row-start prizes-main'>
+          <image src='{{ item.imgUrl }}'></image>
+          <view class='flex-col-start-start prizes-col'>
+            <text>{{ item.name }}</text>
+            <text>{{ item.createTime }}</text>
+          </view>
+        </view>
+      </view>
+      <image src='{{ url }}noprize_1.png' wx:else class='noprize-img' mode='widthFix'></image>
+    </view>
+    <text class='close close-right' catchtap='closeDialog'>
+    </text>
+  </view>
+</view>
+
+<!-- 谢谢参与弹窗 -->
+<view class='dialog' wx:if="{{ loseLuckDialog }}">
+  <view class='absolute-center lose-main anim bounceIn'>
+    <image src='{{ url }}lucky_lose.png' mode='widthFix'></image>
+    <text class='close close-right close-lose' catchtap='closeDialog'></text>
+  </view>
+</view>
+
+<!-- 恭喜中奖弹窗 -->
+<view class='dialog' wx:if="{{ luckDialog }}">
+  <view class='luck-main absolute-center anim bounceIn'>
+    <image src='{{ url }}lucky_win_bg_1.png' mode='widthFix'></image>
+    <!-- 奖品 -->
+    <view class='luck-show'>
+      <image src='{{ luckImg }}' mode='widthFix'></image>
+    </view>
+    <!-- 文字描述 -->
+    <view class='desc'>{{ description }}</view>
+    <text class='close close-right' catchtap='closeDialog'></text>
+  </view>
+</view>

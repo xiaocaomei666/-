@@ -1,23 +1,46 @@
-// 格式过滤
+/**------------------------------格式过滤-------------------------------*/
 // 价格小数点  eg: 9 => 9.00
-var numToFixed =  function (num, digits = 2) {
+var numToFixed = function(num, digits = 2) {
   if (typeof num !== 'number') {
     num = Number(num)
   }
   return num.toFixed(digits)
 }
 
-// 格式时间 eg： 2019-12-14 23:59:59 => 2019.12.14
+// 过滤掉时分秒并且转换年月日分隔符 eg： 2019-12-14 23:59:59 => 2019.12.14
 var sliceDateToDot = function(item) {
   if (item) {
-    var reg =  getRegExp('-', 'g')
+    var reg = getRegExp('-', 'g')
     return item.slice(0, 10).replace(reg, '.')
   } else {
     return ''
   }
 }
 
+// 手机号码隐藏中间4位 eg:18822226666 => 188****6666
+var hidePhoneMiddle = function(item) {
+  if (item && item != 'null') {
+    return item.slice(0, 3) + '****' + item.slice(7)
+  } else {
+    return ''
+  }
+}
+
+// 手机号码隐藏中间4位 eg:18822226666 => 188****6666
+var hidePhoneReg = function (item) {
+  if (item && item != 'null') {
+    var reg = getRegExp('^(\d{3})\d{4}(\d{4})$')
+    return item.replace(reg, "$1****$2")
+  } else {
+    return ''
+  }
+}
+
+
+
 module.exports = {
   numToFixed: numToFixed,
-  sliceDateToDot: sliceDateToDot
+  sliceDateToDot: sliceDateToDot,
+  hidePhoneMiddle: hidePhoneMiddle,
+  hidePhoneReg: hidePhoneReg
 }

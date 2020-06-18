@@ -7,3 +7,9 @@
     <text class="pickerstyle" wx:else>请选择</text>
   </view>
 </picker>
+
+<text class='title'>2. 详细地址的输入</text>
+<view class='textarea'>
+  <textarea placeholder="请输入详细地址" placeholder-class='placeholder-input' bindinput="bindInput" value="{{ cuAddress }}" class="addr {{ isIOS ? 'iosTextArea' : '' }}" maxlength="50" auto-height="true" disabled="{{  optionState == 2 }}" bindfocus='inputFocus'
+    id="detail"></textarea>
+</view>

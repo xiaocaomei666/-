@@ -5,3 +5,22 @@
 <button plain class="btn" catchtap='debounce'>函数防抖</button>
 
 <button plain class="btn" catchtap='address'>自定义地址组件</button>
+
+<button plain class="btn" catchtap='filter'>过滤器</button>
+
+<button plain class="btn" catchtap='scence'>获取场景参数值</button>
+
+<button plain class="btn" catchtap='time'>时间工具类</button>
+
+<button plain class="btn" catchtap="prizeDraw">抽奖</button>
+
+<button plain class="btn" catchtap="saveImg">保存图片到相册</button>
+
+<button plain class="btn" catchtap="saveShareImg">保存海报到相册</button>
+
+<button plain class="btn" catchtap="saveShareImgAuto">默认保存海报到相册</button>
+
+<button plain class="btn" catchtap="updateMsg">更新个人信息</button>
+
+
+<open-data type="groupName" open-gid="xxxxxx"></open-data>

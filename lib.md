@@ -21,4 +21,11 @@
 "pages/example/example"              常用实例
     "pages/exGlobalGet/exGlobalGet"      数据获取和操作
     "pages/exAddress/exAddress"          自定义地址组件
+    "pages/exFilter/exFilter"            过滤器
+    "pages/distributorRegister/distributorRegister"  获取场景值
+    "pages/exTime/exTime"                时间工具类
+    "pages/exPrizeDraw/exPrizeDraw"      抽奖案例
+    "pages/exSaveImg/exSaveImg"          保存图片
+    "pages/exSaveShareImg/exSaveShareImg" 保留分享图
+    "pages/exUpdateMsg/exUpdateMsg"      更新个人信息
 ```
